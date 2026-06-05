@@ -1,5 +1,4 @@
 # Ping Check!
-___
 ## Summary
 Set a ping threshold that you deem too high to do certain PvM content. When above that threshold, you will get alerted and any menu entries that would allow you to engage with that content will be hidden. You can toggle this on a per-boss basis, and can configure the alert how you would like it.
 
@@ -11,4 +10,4 @@ Set a ping threshold that you deem too high to do certain PvM content. When abov
 - Vorkath
 - Zulrah
 
-For suggestions or bugs, open an issue or contact me on Discord `@Jaesic`
+For suggestions or bugs, [open an issue](https://github.com/jaesicc/ping-check/issues) or contact me on Discord `@Jaesic`
