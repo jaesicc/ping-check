@@ -1,6 +1,9 @@
 # Ping Check!
 ## Summary
-Set a ping threshold that you deem too high to do certain PvM content. When above that threshold, you will get alerted and any menu entries that would allow you to engage with that content will be hidden. You can toggle this on a per-boss basis, and can configure the alert how you would like it.
+Stop finding out you're on high ping midway through your PvM encounter. Once your ping goes above your configured threshold, get alerted right away so you can hop before it's too late.
+
+## How it works
+When you enter the lobby/entrance of one of the below PvM encounters, this plugin will check your ping to see if it is higher than the threshold you have set in the plugin settings. If you are above the threshold, any menu entries that would let you enter/start the content will be hidden, you'll get a chat message, and an on-screen alert that you can configure. You can toggle this on and off on a per-encounter basis.
 
 ## Content Supported
 - Raids (CoX, ToB, ToA)
