@@ -1,13 +1,13 @@
-package com.example;
+package com.pingcheck;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public class ExamplePluginTest
+public class PingCheckPluginTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(ExamplePlugin.class);
+		ExternalPluginManager.loadBuiltin(PingCheckPlugin.class);
 		RuneLite.main(args);
 	}
 }
