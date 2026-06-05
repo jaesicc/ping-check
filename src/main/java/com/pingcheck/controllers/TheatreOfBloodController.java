@@ -1,9 +1,11 @@
 package com.pingcheck.controllers;
 
-public class TheatreOfBloodController extends PingCheckController {
+public class TheatreOfBloodController extends PingCheckController
+{
 
-    @Override
-    protected String[] getHiddenMenuOptions() {
-        return new String[]{ "Read", "Enter" };
-    }
+	@Override
+	protected String[] getHiddenMenuOptions()
+	{
+		return new String[]{"Read", "Enter"};
+	}
 }

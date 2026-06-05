@@ -81,6 +81,7 @@ public interface PingCheckConfig extends Config
 	{
 		return true;
 	}
+
 	@ConfigItem(
 		keyName = "textColor",
 		name = "Text Color",

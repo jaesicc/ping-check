@@ -40,7 +40,7 @@ import java.util.function.Supplier;
 @PluginDescriptor(
 	name = "Ping Check",
 	description = "Make sure your ping isn't too high when entering a PvM encounter",
-	tags = {"ping","check" }
+	tags = {"ping", "check"}
 )
 public class PingCheckPlugin extends Plugin
 {
@@ -137,8 +137,10 @@ public class PingCheckPlugin extends Plugin
 	}
 
 	@Subscribe
-	protected void onConfigChanged(ConfigChanged event) {
-		if (!event.getGroup().equals(PingCheckConfig.GROUP)) {
+	protected void onConfigChanged(ConfigChanged event)
+	{
+		if (!event.getGroup().equals(PingCheckConfig.GROUP))
+		{
 			return;
 		}
 
@@ -159,24 +161,31 @@ public class PingCheckPlugin extends Plugin
 				int regionId = getCurrentRegionId();
 				if (
 					validRegions.contains(regionId) &&
-					regionToEnabledFlagMap.containsKey(regionId) &&
-					regionToEnabledFlagMap.get(regionId).get()
-				) {
+						regionToEnabledFlagMap.containsKey(regionId) &&
+						regionToEnabledFlagMap.get(regionId).get()
+				)
+				{
 					executor.execute(() -> {
-							int currentWorldId = client.getWorld();
+						int currentWorldId = client.getWorld();
 
-							// Find world metadata to get the actual server host address
-							World currentWorld = Objects.requireNonNull(worldService.getWorlds()).findWorld(currentWorldId);
-							if (currentWorld == null) return;
+						// Find world metadata to get the actual server host address
+						World currentWorld = Objects.requireNonNull(worldService.getWorlds()).findWorld(currentWorldId);
+						if (currentWorld == null)
+						{
+							return;
+						}
 
-							// Ping the current world server safely
-							int pingResult = Ping.ping(currentWorld, false);
-							controller = controllerFactory.create(regionId, pingResult);
-							if (controller != null && controller.isHighPing()) {
-								controller.alert();
-							}
-						});
-				} else {
+						// Ping the current world server safely
+						int pingResult = Ping.ping(currentWorld, false);
+						controller = controllerFactory.create(regionId, pingResult);
+						if (controller != null && controller.isHighPing())
+						{
+							controller.alert();
+						}
+					});
+				}
+				else
+				{
 					controller = null;
 				}
 			}
@@ -202,21 +211,25 @@ public class PingCheckPlugin extends Plugin
 		return configManager.getConfig(PingCheckConfig.class);
 	}
 
-	private void reset() {
+	private void reset()
+	{
 		controller = null;
 		overlayManager.remove(textOverlay);
 		overlayManager.remove(screenFlashOverlay);
 	}
 
-	private int getCurrentRegionId() {
+	private int getCurrentRegionId()
+	{
 		int regionId = client.getLocalPlayer().getWorldLocation().getRegionID();
-		if (validRegions.contains(regionId) || !client.isInInstancedRegion()) {
+		if (validRegions.contains(regionId) || !client.isInInstancedRegion())
+		{
 			return regionId;
 		}
 
 		WorldPoint instancedWorldPoint = WorldPoint.fromLocalInstance(client, client.getLocalPlayer().getLocalLocation());
 		int instancedRegionId = instancedWorldPoint.getRegionID();
-		if (validRegions.contains(instancedRegionId)) {
+		if (validRegions.contains(instancedRegionId))
+		{
 			return instancedRegionId;
 		}
 

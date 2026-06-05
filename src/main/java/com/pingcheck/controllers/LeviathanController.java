@@ -1,9 +1,11 @@
 package com.pingcheck.controllers;
 
-public class LeviathanController extends PingCheckController {
+public class LeviathanController extends PingCheckController
+{
 
-    @Override
-    protected String[] getHiddenMenuOptions() {
-        return new String[]{ "Travel" };
-    }
+	@Override
+	protected String[] getHiddenMenuOptions()
+	{
+		return new String[]{"Travel"};
+	}
 }

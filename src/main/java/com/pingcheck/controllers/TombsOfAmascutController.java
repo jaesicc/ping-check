@@ -1,9 +1,11 @@
 package com.pingcheck.controllers;
 
-public class TombsOfAmascutController extends PingCheckController {
+public class TombsOfAmascutController extends PingCheckController
+{
 
-    @Override
-    protected String[] getHiddenMenuOptions() {
-        return new String[]{"Enter", "Inspect"};
-    }
+	@Override
+	protected String[] getHiddenMenuOptions()
+	{
+		return new String[]{"Enter", "Inspect"};
+	}
 }

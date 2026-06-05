@@ -44,92 +44,106 @@ import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public abstract class PingCheckController {
-    @Setter
-    private int ping;
+public abstract class PingCheckController
+{
+	@Setter
+	private int ping;
 
-    @Inject
-    private PingCheckConfig config;
+	@Inject
+	private PingCheckConfig config;
 
-    @Inject
-    private Client client;
+	@Inject
+	private Client client;
 
-    @Inject
-    private ClientThread clientThread;
+	@Inject
+	private ClientThread clientThread;
 
-    @Inject
-    private ChatMessageManager chatMessageManager;
+	@Inject
+	private ChatMessageManager chatMessageManager;
 
-    @Inject
-    private OverlayManager overlayManager;
+	@Inject
+	private OverlayManager overlayManager;
 
-    @Inject
-    private AlertScreenFlashOverlay screenFlashOverlay;
+	@Inject
+	private AlertScreenFlashOverlay screenFlashOverlay;
 
-    @Inject
-    private AlertTextOverlay alertTextOverlay;
+	@Inject
+	private AlertTextOverlay alertTextOverlay;
 
-    public boolean isHighPing() {
-        return ping > config.pingThreshold();
-    }
+	public boolean isHighPing()
+	{
+		return ping > config.pingThreshold();
+	}
 
-    /**
-     * Gets set of menu options to be hidden if ping is too high
-     */
-    abstract protected String[] getHiddenMenuOptions();
+	/**
+	 * Gets set of menu options to be hidden if ping is too high
+	 */
+	abstract protected String[] getHiddenMenuOptions();
 
-    protected void addChatMessage() {
-        clientThread.invokeLater(() -> {
-            String highlightedMessage = new ChatMessageBuilder()
-                .append(
-                    Color.RED,
-                    "Ping Check! Your ping is higher than you would prefer for this content. Go to a different world or configure your Ping Check settings differently."
-                )
-                .append(ChatColorType.HIGHLIGHT)
-                .build();
+	protected void addChatMessage()
+	{
+		clientThread.invokeLater(() -> {
+			String highlightedMessage = new ChatMessageBuilder()
+				.append(
+					Color.RED,
+					"Ping Check! Your ping is higher than you would prefer for this content. Go to a different world or configure your Ping Check settings differently."
+				)
+				.append(ChatColorType.HIGHLIGHT)
+				.build();
 
-            chatMessageManager.queue(QueuedMessage.builder()
-                .type(ChatMessageType.GAMEMESSAGE)
-                .runeLiteFormattedMessage(highlightedMessage)
-                .build());
-        });
-    }
-    public void alert() {
-        addChatMessage();
-        handleTextAlert();
-        handleScreenFlashAlert();
+			chatMessageManager.queue(QueuedMessage.builder()
+				.type(ChatMessageType.GAMEMESSAGE)
+				.runeLiteFormattedMessage(highlightedMessage)
+				.build());
+		});
+	}
 
-    }
+	public void alert()
+	{
+		addChatMessage();
+		handleTextAlert();
+		handleScreenFlashAlert();
 
-    private void handleTextAlert() {
-        if (config.isTextBoxEnabled()) {
-            overlayManager.add(alertTextOverlay);
-        } else {
-            overlayManager.remove(alertTextOverlay);
-        }
-    }
+	}
 
-    private void handleScreenFlashAlert() {
-        if (config.isScreenFlashingEnabled()) {
-            overlayManager.add(screenFlashOverlay);
-            screenFlashOverlay.startFlash();
-        } else {
-            overlayManager.remove(screenFlashOverlay);
-        }
-    }
+	private void handleTextAlert()
+	{
+		if (config.isTextBoxEnabled())
+		{
+			overlayManager.add(alertTextOverlay);
+		}
+		else
+		{
+			overlayManager.remove(alertTextOverlay);
+		}
+	}
 
-    public void hideMenuEntries() {
-        HashSet<String> options = new HashSet<>(Arrays.asList(getHiddenMenuOptions()));
-        final MenuEntry[] menuEntries = client.getMenuEntries();
-        if (menuEntries == null)
-        {
-            return;
-        }
+	private void handleScreenFlashAlert()
+	{
+		if (config.isScreenFlashingEnabled())
+		{
+			overlayManager.add(screenFlashOverlay);
+			screenFlashOverlay.startFlash();
+		}
+		else
+		{
+			overlayManager.remove(screenFlashOverlay);
+		}
+	}
 
-        final MenuEntry[] filteredEntries = Arrays.stream(menuEntries)
-            .filter(x -> x != null && x.getOption() != null && !options.contains(x.getOption()))
-            .toArray(MenuEntry[]::new);
+	public void hideMenuEntries()
+	{
+		HashSet<String> options = new HashSet<>(Arrays.asList(getHiddenMenuOptions()));
+		final MenuEntry[] menuEntries = client.getMenuEntries();
+		if (menuEntries == null)
+		{
+			return;
+		}
 
-        client.setMenuEntries(filteredEntries);
-    }
+		final MenuEntry[] filteredEntries = Arrays.stream(menuEntries)
+			.filter(x -> x != null && x.getOption() != null && !options.contains(x.getOption()))
+			.toArray(MenuEntry[]::new);
+
+		client.setMenuEntries(filteredEntries);
+	}
 }
