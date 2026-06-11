@@ -43,7 +43,7 @@ public interface PingCheckConfig extends Config
 	@Units(Units.MILLISECONDS)
 	default int pingThreshold()
 	{
-		return 200;
+		return 100;
 	}
 
 	@ConfigItem(
